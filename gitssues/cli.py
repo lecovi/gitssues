@@ -15,16 +15,13 @@ def dict_to_dataclass(to_dataclass, from_dict):
         setattr(to_dataclass, key, value)
 
 
-def get_user_and_token(user="USERNAME", token="JIRA_TOKEN"):
-    return os.getenv(user), os.getenv(token)
-
-
 def load_config(path="gitssues.yml"):
     with open(path) as f:
         return yaml.full_load(f)
 
 
-USERNAME, JIRA_TOKEN = get_user_and_token()
+USERNAME = os.getenv("USERNAME")
+JIRA_TOKEN = os.getenv("JIRA_TOKEN")
 SCHEDULE_NAME = os.getenv("SCHEDULE_NAME")
 OPSGENIE_TOKEN = os.getenv("OPSGENIE_TOKEN")
 
