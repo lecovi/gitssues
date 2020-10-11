@@ -30,3 +30,7 @@ repos:
     rev: v1.0.0
     hooks:
     -   id: check-poetry
+-   repo: https://github.com/gvanderest/pylama-pre-commit
+    rev: 0.1.2
+    hooks:
+    - id: pylama
