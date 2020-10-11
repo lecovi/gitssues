@@ -1,0 +1,15 @@
+project_key: PYTK
+issue_type: Bug
+labels:
+    - python-ecosystem
+    - toolkits
+JIRA_BASE_URL: https://mercadolibre.atlassian.net/rest
+BOARD_URL_TEMPLATE: "{BASE_URL}/agile/latest/board"
+PROJECT_URL_TEMPLATE: "{BASE_URL}/agile/latest/board/{BOARD_ID}/project"
+ISSUE_META_URL_TEMPLATE: "{BASE_URL}/api/3/issue/createmeta"
+SPRINT_URL_TEMPLATE: "{BASE_URL}/agile/latest/board/{BOARD_ID}/sprint"
+LOAD_ISSUE_TEMPLATE: "{BASE_URL}/api/3/issue"
+MOVE_ISSUE_TO_SPRINT_TEMPLATE: "{BASE_URL}/agile/latest/sprint/{SPRINT_ID}/issue"
+MOVE_ISSUE_TO_BACKLOG_TEMPLATE: "{BASE_URL}/agile/latest/backlog/{BOARD_ID}/issue"
+ASSIGNABLE_USER_TEMPLATE: "{BASE_URL}/api/3/user/assignable/search"
+ASSIGN_ISSUE_TEMPLATE: "{BASE_URL}/api/3/issue/{issueIdOrKey}/assignee"
