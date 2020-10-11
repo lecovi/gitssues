@@ -23,6 +23,7 @@ def load_config(path="gitssues.yml"):
     with open(path) as f:
         return yaml.full_load(f)
 
+
 USERNAME, JIRA_TOKEN = get_user_and_token()
 SCHEDULE_NAME = os.getenv("SCHEDULE_NAME")
 OPSGENIE_TOKEN = os.getenv("OPSGENIE_TOKEN")
@@ -70,11 +71,11 @@ class Jira:
         self.issue_type = IssueType(name=self.config["issue_type"])
 
     def get_board(self):
-        #FIXME: Error management
+        # FIXME: Error management
         response = requests.get(
             f"{self._base_url}/agile/latest/board",
             auth=self.auth,
-            params={"projectKeyOrId": self.project.key}
+            params={"projectKeyOrId": self.project.key},
         )
         response_data = response.json()
         board_data = response_data["values"][0]
@@ -87,22 +88,22 @@ class Jira:
         return
 
     def update_project(self):
-        #FIXME: Error management
+        # FIXME: Error management
         response = requests.get(
             f"{self._base_url}/agile/latest/board/{self.board.id}/project",
             auth=self.auth,
-            params={"projectKeyOrId": self.config["project_key"]}
+            params={"projectKeyOrId": self.config["project_key"]},
         )
         response_data = response.json()
         project_data = response_data["values"][0]
         dict_to_dataclass(self.project, project_data)
 
     def get_issue_type(self):
-        #FIXME: Error management
+        # FIXME: Error management
         response = requests.get(
             f"{self._base_url}/api/3/issue/createmeta",
             auth=self.auth,
-            params={"projectKeys": self.config["project_key"]}
+            params={"projectKeys": self.config["project_key"]},
         )
         response_data = response.json()
         for issuetype in response_data["projects"][0]["issuetypes"]:
@@ -113,20 +114,15 @@ class Jira:
         response = requests.get(
             f"{self._base_url}/agile/latest/board/{self.board.id}/sprint",
             auth=self.auth,
-            params={"state": "active"}
+            params={"state": "active"},
         )
         response_data = response.json()
         sprint_data = response_data["values"][0]
-        self.sprint = Sprint(
-            id=sprint_data["id"]
-        )
+        self.sprint = Sprint(id=sprint_data["id"])
         dict_to_dataclass(self.sprint, sprint_data)
 
     def load_issue(self, title, content):
-        headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
+        headers = {"Accept": "application/json", "Content-Type": "application/json"}
         payload = {
             "update": {},
             "fields": {
@@ -148,12 +144,12 @@ class Jira:
                                     "text": content,
                                     "type": "text",
                                 }
-                            ]
+                            ],
                         }
-                    ]
+                    ],
                 },
                 "labels": self.labels,
-            }
+            },
         }
         response = requests.post(
             f"{self._base_url}/api/3/issue",
@@ -166,10 +162,7 @@ class Jira:
         dict_to_dataclass(self.issue, response.json())
 
     def move_issue_to_sprint(self):
-        headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
+        headers = {"Accept": "application/json", "Content-Type": "application/json"}
         payload = {
             "issues": [
                 self.issue.key,
@@ -187,7 +180,7 @@ class Jira:
         headers = {
             "Authorization": f"GenieKey {OPSGENIE_TOKEN}",
             "Accept": "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
         response = requests.get(
             f"https://api.opsgenie.com/v2/schedules/{SCHEDULE_NAME}/on-calls",
@@ -202,7 +195,7 @@ class Jira:
         response = requests.get(
             f"{self._base_url}/api/3/user/assignable/search",
             auth=self.auth,
-            params={"issueKey": self.issue.key}
+            params={"issueKey": self.issue.key},
         )
         response_data = response.json()
         for user in response_data:
@@ -210,10 +203,7 @@ class Jira:
                 return user["accountId"]
 
     def assign_issue_to_on_call_user(self):
-        headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
+        headers = {"Accept": "application/json", "Content-Type": "application/json"}
         user = self.get_on_call_users()[0]
         account_id = self.get_account_id(mail=user["name"])
         payload = {
