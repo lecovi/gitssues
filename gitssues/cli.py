@@ -1,11 +1,11 @@
 import json
 import os
 from dataclasses import dataclass
-from dotenv import load_dotenv
-import requests
-from requests.auth import HTTPBasicAuth
-import yaml
 
+import requests
+import yaml
+from dotenv import load_dotenv
+from requests.auth import HTTPBasicAuth
 
 load_dotenv()
 
