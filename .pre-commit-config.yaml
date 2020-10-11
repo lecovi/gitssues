@@ -25,7 +25,7 @@ repos:
     rev: 1.6.2
     hooks:
     -   id: bandit
-        args: ["--exclude ./tests/*"]
+        exclude: ^tests/
 -   repo: https://gitlab.com/smop/pre-commit-hooks
     rev: v1.0.0
     hooks:
