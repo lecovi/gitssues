@@ -68,16 +68,17 @@ def github():
 
     body = request.get_json()
     register_webhook_ping(body)
-    action = body["action"]
+    action = body.get("action")
 
+    # When action is not present, hook is not about an Issue
     # When action is "opened" it means a New Issue
     # When action is "created" it means a New Comment on the Issue
     # When action is "closed" it means the Issue is Closed
-    if action == "opened":
+    if action != "opened":
+        response = {"message": "Not a new issue"}
+    else:
         title, content = parse_issue_data(body)
         response = {"title": title, "content": content}
-    else:
-        response = {"message": "Not a new issue"}
 
     current_app.logger.debug(json.dumps(response))
 
