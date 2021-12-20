@@ -198,6 +198,8 @@ class Jira:
                             "type": "paragraph",
                             "content": [
                                 {
+                                    #TODO: parse Markdown to Atlassian Document Format
+                                    # https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/#atlassian-document-format
                                     "text": content,
                                     "type": "text",
                                 }

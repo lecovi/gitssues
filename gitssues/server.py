@@ -95,12 +95,12 @@ def github():
     # When action is "closed" it means the Issue is Closed
     if action == "created":
         response = {"message": "Comment on issue"}
-        # We add a comment to the Issue at JIRA
+        #TODO: We add a comment to the Issue at JIRA
         return jsonify({"Status": "Comment on issue"})
 
     if action == "closed":
-        # We add a comment to the Issue at JIRA with 'closed by user on GH'
-        # We close the Issue at JIRA (set it to DONE)
+        #TODO: We add a comment to the Issue at JIRA with 'closed by user on GH'
+        #TODO: We close the Issue at JIRA (set it to DONE)
         response = {"message": "Closed issue"}
 
         return jsonify({"Status": "Closed issue"})

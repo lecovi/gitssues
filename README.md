@@ -41,9 +41,10 @@ You can use CLI to test `gitssues`:
 - [ ] Create Webhook for Jira when comment on an issue
 - [ ] Create Webhook for Jira when issue is updated
 - [ ] Create Webhook for Jira when transition is applied to an issue
-- [x] Create GitHub integration
-- [ ] Create GitHub Webhook
-- [ ] Create Server endpoints for Jira and GitHub
+- [x] Create Server endpoint for GitHub
+- [x] Create GitHub Webhook
+- [ ] Create Server endpoints for Jira
+- [ ] Add Support for Markdown-Atlassian Document Format convertion
 
 ### Jira Docs
 
