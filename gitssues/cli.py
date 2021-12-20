@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 import gitssues.jira.cli as jira_app
 import gitssues.github.cli as github_app
 from gitssues.jira import Jira
+from gitssues.github import GitHub
 
 
 load_dotenv()
@@ -22,14 +23,18 @@ def prepare():
     p = Path("gitssues.cache")
     if p.exists():
         with p.open("rb") as f:
-            jira = pickle.load(f)
+            gitssues = pickle.load(f)
     else:
         jira = Jira()
+        github = GitHub()
         jira.prepare_jira()
         with p.open("wb") as f:
-            pickle.dump(jira, f)
+            gitssues = {
+                "jira": jira,
+                "github": github,
+            }
+            pickle.dump(gitssues, f)
 
-    typer.echo(jira)
     typer.echo("Done!")
 
 

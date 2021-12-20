@@ -1,5 +1,5 @@
 """
-This module contains the Exceptions for Jira class.
+This module contains the Exceptions for Jira package.
 """
 
 

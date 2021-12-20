@@ -33,7 +33,9 @@ def new(
         exit(1)
 
     with p.open("rb") as f:
-        jira = pickle.load(f)
+        gitssues = pickle.load(f)
+        github = gitssues["github"]
+        jira = gitssues["jira"]
 
     # Get **Active Sprint** from *Board*
     sprint_data = jira.get_active_sprint_data(board_id=jira.board.id)
@@ -81,7 +83,9 @@ def comment(
         exit(1)
 
     with p.open("rb") as f:
-        jira = pickle.load(f)
+        gitssues = pickle.load(f)
+        github = gitssues["github"]
+        jira = gitssues["jira"]
 
     jira.add_comment_to_issue(issue_key=issue_key, comment=comment)
     typer.echo(f"Comment added to Issue {issue_key}! ")
@@ -101,7 +105,9 @@ def transition(
         exit(1)
 
     with p.open("rb") as f:
-        jira = pickle.load(f)
+        gitssues = pickle.load(f)
+        github = gitssues["github"]
+        jira = gitssues["jira"]
 
     transitions_data = jira.get_issue_transitions(issue_key=issue_key)
     transition = jira.get_transition(
@@ -125,7 +131,9 @@ def delete(
         exit(1)
 
     with p.open("rb") as f:
-        jira = pickle.load(f)
+        gitssues = pickle.load(f)
+        github = gitssues["github"]
+        jira = gitssues["jira"]
 
     jira.delete_issue(issue_key=issue_key)
     typer.echo(f"Issue {issue_key} deleted!")
@@ -145,7 +153,9 @@ def assign(
         exit(1)
 
     with p.open("rb") as f:
-        jira = pickle.load(f)
+        gitssues = pickle.load(f)
+        github = gitssues["github"]
+        jira = gitssues["jira"]
 
     # FIXME: check if usermail is valid
     # FIXME: check if usermail is assignable

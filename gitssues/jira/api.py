@@ -33,11 +33,11 @@ class Jira:
 
     def _load_auth_credentials(self):
         """
-        Reads USERNAME and JIRA_TOKEN from environment variables and sets the auth.
+        Reads JIRA_USERNAME and JIRA_TOKEN from environment variables and sets the auth.
         """
-        USERNAME = os.getenv("USERNAME")
+        JIRA_USERNAME = os.getenv("JIRA_USERNAME")
         JIRA_TOKEN = os.getenv("JIRA_TOKEN")
-        self.auth = requests.auth.HTTPBasicAuth(USERNAME, JIRA_TOKEN)
+        self.auth = requests.auth.HTTPBasicAuth(JIRA_USERNAME, JIRA_TOKEN)
 
     def _load_config(self, path):
         """

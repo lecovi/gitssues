@@ -8,6 +8,11 @@ and create an API token.
 Go to your integrations page https://nasdaq-meli.app.opsgenie.com/settings/integration/add/API/
 and add a new API token.
 
+# Create Personal Access Token @ GitHub
+
+Go to your profile developer settings https://github.com/settings/tokens and create a 
+personal access token with *repo*, *workflow* and *user* scopes.
+
 # Creating a new Bug in Jira
 
 1. Configure Jira Object:

@@ -8,3 +8,4 @@ JIRA_BASE_URL: https://mercadolibre.atlassian.net/rest
 JIRA_SCD_API_VERSION: latest
 # Jira Cloud Platform Developer
 JIRA_CPD_API_VERSION: 3
+GITHUB_BASE_URL: https://api.github.com
