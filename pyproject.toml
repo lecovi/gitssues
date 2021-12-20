@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gitssues"
-version = "0.0.1"
+version = "0.1.0"
 description = "Jira and Github sync issues"
 authors = ["lecovi <colomboleandro@gmail.com>"]
 license = "MIT"
