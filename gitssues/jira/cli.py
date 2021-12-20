@@ -4,19 +4,20 @@ import random
 
 import typer
 
-from .api import Jira
+from gitssues import __version__
 
 
 app = typer.Typer()
+bug = typer.Typer(help="Bug related commands")
+app.add_typer(bug, name="bug")
+
+@app.command(help="Shows CLI version")
+def version():
+    typer.echo(f"Hello Jira from Gitssues v{__version__}!")
 
 
-@app.command()
-def main():
-    typer.echo("Hello Jira!")
-
-
-@app.command()
-def new_bug(
+@bug.command(help="Creates a bug in active sprint and assignes it to a user")
+def new(
     title: str,
     content: str,
     on_call: bool = typer.Option(
@@ -66,8 +67,8 @@ def new_bug(
     )
 
 
-@app.command()
-def comment_bug(
+@bug.command(help="Add comment to an issue")
+def comment(
     issue_key: str,
     comment: str,
 ):
@@ -86,8 +87,8 @@ def comment_bug(
     typer.echo(f"Comment added to Issue {issue_key}! ")
 
 
-@app.command()
-def change_bug_state(
+@bug.command(help="Set a new state for an issue")
+def transition(
     issue_key: str,
     new_state: str,
 ):
@@ -111,8 +112,8 @@ def change_bug_state(
     typer.echo(f"Issue {issue_key} set to {new_state}! ")
 
 
-@app.command()
-def delete_bug(
+@bug.command(help="Deletes an issue")
+def delete(
     issue_key: str,
 ):
     jira = None
@@ -130,8 +131,8 @@ def delete_bug(
     typer.echo(f"Issue {issue_key} deleted!")
 
 
-@app.command()
-def assign_bug(
+@bug.command(help="Assigns an issue to a user")
+def assign(
     issue_key: str,
     usermail: str,
 ):
