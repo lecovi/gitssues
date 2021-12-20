@@ -13,6 +13,11 @@ and add a new API token.
 Go to your profile developer settings https://github.com/settings/tokens and create a 
 personal access token with *repo*, *workflow* and *user* scopes.
 
+# Create Webhook @ GitHub
+
+Go to your repository settings https://github.com/{ownser}/{repo}/settings/hooks and configure a webhook
+with *Issues* and *Issue comments* scopes selected.
+
 # Creating a new Bug in Jira
 
 1. Configure Jira Object:

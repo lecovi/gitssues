@@ -37,35 +37,10 @@ def new(
         github = gitssues["github"]
         jira = gitssues["jira"]
 
-    # Get **Active Sprint** from *Board*
-    sprint_data = jira.get_active_sprint_data(board_id=jira.board.id)
-    jira.parse_sprint_data(sprint_data=sprint_data)
-
-    # FIXME: make this transaction atomic (if something went wrong, delete the issue)
-    # Post **Issue** to *Project* backlog
-    issue_data = jira.post_issue_to_backlog(title=title, content=content)
-    jira.parse_issue_data(issue_data=issue_data)
-
-    # Move **Issue** to *Active Sprint*
-    jira.move_issue_to_sprint(issue_key=jira.issue.key, sprint_id=jira.sprint.id)
-
-    # Assign **Issue** to *User*
-    # if usermail is not provided, then search in OpsGenie who is on-call
-    if on_call:
-        users_data = jira.get_on_call_users_data()
-        users = jira.parse_on_call_users_data(on_call_users_data=users_data)
-        jira.assign_issue_to_user(
-            issue_key=jira.issue.key, user_account_id=users[0]["emailAddress"]
-        )
-    else:
-        users_data = jira.get_assignable_users_for_issue_data(issue_key=jira.issue.key)
-        user = random.choice(users_data)
-        jira.assign_issue_to_user(
-            issue_key=jira.issue.key, user_account_id=user["accountId"]
-        )
+    jira.new_issue(title=title, content=content, on_call=on_call)
 
     typer.echo(
-        f"Issue {jira.issue.key} created and assigned to {user['emailAddress']}! "
+        f"Issue {jira.issue.key} created and assigned! "
     )
 
 

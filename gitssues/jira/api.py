@@ -4,6 +4,7 @@ This module contains the main Jira API class.
 from dataclasses import dataclass, field
 from http import HTTPStatus
 import os
+import random
 
 import requests
 
@@ -506,3 +507,35 @@ class Jira:
             raise JiraException(msg)
 
         return response.json()
+
+    def new_issue(self, title, content, on_call=False):
+        """
+        Receives a title and content and creates a new issue to active sprint and assign it to a random user. Returns the issue key.
+        """
+        # Get **Active Sprint** from *Board*
+        sprint_data = self.get_active_sprint_data(board_id=self.board.id)
+        self.parse_sprint_data(sprint_data=sprint_data)
+
+        # FIXME: make this transaction atomic (if something went wrong, delete the issue)
+        # Post **Issue** to *Project* backlog
+        issue_data = self.post_issue_to_backlog(title=title, content=content)
+        self.parse_issue_data(issue_data=issue_data)
+
+        # Move **Issue** to *Active Sprint*
+        self.move_issue_to_sprint(issue_key=self.issue.key, sprint_id=self.sprint.id)
+
+        # Assign **Issue** to *User*
+        # if usermail is not provided, then search in OpsGenie who is on-call
+        if on_call:
+            users_data = self.get_on_call_users_data()
+            users = self.parse_on_call_users_data(on_call_users_data=users_data)
+            self.assign_issue_to_user(
+                issue_key=self.issue.key, user_account_id=users[0]["emailAddress"]
+            )
+        else:
+            users_data = self.get_assignable_users_for_issue_data(issue_key=self.issue.key)
+            user = random.choice(users_data)
+            self.assign_issue_to_user(
+                issue_key=self.issue.key, user_account_id=user["accountId"]
+            )
+        return self.issue.key
